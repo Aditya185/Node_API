@@ -56,7 +56,7 @@ router.get('/',(req,res,next)=> {
                     userImage : doc.userImage,
                     request:{
                         type : 'GET',
-                        url : 'http://localhost:3000/users/'+doc._id
+                        url : 'https://lit-waters-85247.herokuapp.com/users/'+doc._id
                     }
 
 
@@ -95,7 +95,7 @@ router.post('/',checkAuth,upload.single('userImage'),(req,res,next)=> {
             _id: result._id,
             request :{
                 type : 'GET',
-                url : 'http://localhost:3000/users/'+result._id
+                url : 'https://lit-waters-85247.herokuapp.com/users/'+result._id
             }
         }
   });
@@ -125,7 +125,7 @@ router.get('/:userId',(req,res,next)=> {
                  request :{
                      type : 'GET',
                      description : 'GET_ALL_USERS',
-                     url : 'http://localhost:3000/users'
+                     url : 'https://lit-waters-85247.herokuapp.com/users'
                  }
              });
          }else{
@@ -159,7 +159,7 @@ router.patch('/:userId',checkAuth,(req,res,next)=> {
                message : 'User Updated',
                request : {
                    type :'GET',
-                   url : 'http://localhost:3000/users/'+id
+                   url : 'https://lit-waters-85247.herokuapp.com/'+id
                }
            });
     }).catch( err =>{
