@@ -6,6 +6,40 @@ const jwt = require('jsonwebtoken');
 
 const AuthUser = require('../models/auth_user');
 
+
+
+router.get('/',(req,res,next)=> {
+
+    AuthUser.find()
+    .select('name email dob gender') //this columns were fetched we can also remove this select options for showing all columns
+    .exec()
+    .then(docs =>{
+       const response = {
+            count : docs.length,
+            users : docs.map(doc =>{
+                return{
+                    name : doc.name,
+                    email : doc.email,
+                    dob : doc.dob,
+                    _id : doc._id,
+                    gender : doc.gender,
+
+                }
+            })
+       };
+       res.status(200).json(response);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+           error : err
+        });
+    });
+   
+
+});
+
+
 router.post('/signup',(req,res,next) =>{
 
     AuthUser.find({
@@ -28,7 +62,10 @@ router.post('/signup',(req,res,next) =>{
                     const authuser = new AuthUser({
                         _id : new mongoose.Types.ObjectId(),
                         email : req.body.email,
-                        password : hash
+                        password : hash,
+                        name : req.body.name,
+                        dob : req.body.dob,
+                        gender : req.body.gender
                 });
     
                 authuser.save()
